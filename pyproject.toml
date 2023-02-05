@@ -11,6 +11,7 @@ gunicorn = "^20.1.0"
 flake8 = "^6.0.0"
 pytest = "^7.2.1"
 python-dotenv = "^0.21.1"
+Jinja2 = "^3.1.2"
 
 [tool.poetry.dev-dependencies]
 

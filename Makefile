@@ -19,7 +19,7 @@ make coverage:
 make check: lint test coverage
 
 dev:
-	poetry run flask --app page_analyzer:app run
+	poetry run flask --app page_analyzer:app --debug run
 
 PORT ?= 8000
 start:
