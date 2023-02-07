@@ -4,9 +4,6 @@ build:
 install:
 	poetry install
 
-publish:
-	poetry publish --dry-run
-
 lint:
 	poetry run flake8 page_analyzer
 
@@ -17,6 +14,35 @@ make coverage:
 	poetry run pytest --cov=gendiff --cov-report xml
 
 make check: lint test coverage
+
+build-db: db-drop db-create schema-data-load
+
+db-start:
+	sudo service postgresql start
+
+db-status:
+	sudo service postgresql status
+
+db-stop:
+	sudo service postgresql stop
+
+db-create:
+	createdb page_analyzer
+
+db-drop:
+	dropdb page_analyzer
+
+db-reset:
+	dropdb page_analyzer || true
+	createdb page_analyzer
+
+db-dev-setup: db-reset schema-load
+
+schema-load:
+	psql page_analyzer < database.sql
+
+db-connect:
+	psql -d page_analyzer
 
 dev:
 	poetry run flask --app page_analyzer:app --debug run
