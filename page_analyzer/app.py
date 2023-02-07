@@ -14,7 +14,10 @@ from page_analyzer.database import (
                                     get_urls,
                                     create_url,
                                     get_url_by_id,
-                                    get_url_by_name
+                                    get_id_url_by_name,
+                                    create_check,
+                                    get_url_checks,
+                                    get_url_check_last
                                    )
 from page_analyzer.validators import validate_url, is_null
 
@@ -34,6 +37,14 @@ def index():
 def urls():
     messages = get_flashed_messages(with_categories=True)
     data = get_urls()
+    for item in data:
+        data_check = get_url_check_last(item['id'])
+        if data_check is None:
+            item['last_check'] = ''
+            item['status_code'] = ''
+        else:
+            item['last_check'] = data_check['created_at'].date()
+            item['status_code'] = data_check['status_code']
     return render_template('urls.html', data=data, messages=messages)
 
 
@@ -46,7 +57,7 @@ def url_add():
         flash('Некорректный URL', 'error')
         if 'exists' in errors['status']:
             flash('Страница уже существует', 'warning')
-            return redirect(url_for('get_url_id', id=errors['url'][0]))
+            return redirect(url_for('get_url_id', id=errors['url']['id']))
         if 'exceeded size' in errors['status']:
             flash('URL превышает 255', 'error')
         elif 'zero size' in errors['status']:
@@ -55,17 +66,29 @@ def url_add():
         return render_template('index.html', messages=messages), 422
 
     data['url'] = url
-    data['date'] = datetime.datetime.now()
+    data['created_at'] = datetime.datetime.now()
     create_url(data)
-    data = get_url_by_name(url)
+    data = get_id_url_by_name(url)
     flash('Страница успешно добавлена', 'success')
-    return redirect(url_for('get_url_id', id=data[0]))
+    return redirect(url_for('get_url_id', id=data['id']))
 
 
 @app.get('/urls/<id>')
 def get_url_id(id):
     messages = get_flashed_messages(with_categories=True)
-    data = get_url_by_id(id)
+    data = get_url_by_id(int(id))
     if is_null(data):
         return render_template('index.html'), 404
-    return render_template('url_id.html', data=data, messages=messages)
+    data_checks = get_url_checks(int(id))
+    return render_template('url_id.html', data=data,
+                           data_checks=data_checks,
+                           messages=messages)
+
+
+@app.post('/urls/<id>/checks')
+def check_url(id):
+    data = {}
+    data["url_id"] = int(id)
+    data["created_at"] = datetime.datetime.now()
+    create_check(data)
+    return redirect(url_for('get_url_id', id=data["url_id"]))

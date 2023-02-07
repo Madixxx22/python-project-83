@@ -2,7 +2,7 @@ from validators.url import url
 from page_analyzer.database import get_id_url_by_name
 
 
-def is_null(value):
+def is_null(value: any) -> bool:
     if value == []:
         return True
     elif value is None:
@@ -14,7 +14,7 @@ def is_null(value):
     return False
 
 
-def validate_url(check_url):
+def validate_url(check_url: str) -> dict:
     errors = {
         'url': get_id_url_by_name(check_url),
         'status': []
