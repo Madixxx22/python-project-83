@@ -21,7 +21,7 @@ from page_analyzer.database import (
                                     get_url_check_last,
                                    )
 from page_analyzer.validators import validate_url, is_null
-from page_analyzer.logick_checks import check_response
+from page_analyzer.logic_checks import check_response
 
 load_dotenv()
 
