@@ -66,6 +66,20 @@ def get_id_url_by_name(name: str) -> dict:
     return data
 
 
+def get_name_url_by_id(id: int) -> dict:
+    data = None
+    conn = get_connection()
+    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+        query = '''SELECT name
+                   FROM urls
+                   WHERE id = (%s)
+        '''
+        cur.execute(query, [id])
+        data = cur.fetchone()
+    conn.close()
+    return data
+
+
 def get_url_checks(url_id: int) -> list:
     data = None
     conn = get_connection()
@@ -111,9 +125,11 @@ def create_url(data: dict):
 def create_check(data: dict):
     conn = get_connection()
     with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-        query = '''INSERT INTO url_checks (url_id, created_at)
-                   VALUES (%s, %s);
+        query = '''INSERT INTO url_checks (url_id, status_code, created_at)
+                   VALUES (%s, %s, %s);
                 '''
-        cur.execute(query, (data['url_id'], data['created_at']))
+        cur.execute(query, (data['url_id'],
+                            data["status_code"],
+                            data['created_at']))
         conn.commit()
     conn.close()

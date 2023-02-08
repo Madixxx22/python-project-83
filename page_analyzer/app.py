@@ -15,11 +15,13 @@ from page_analyzer.database import (
                                     create_url,
                                     get_url_by_id,
                                     get_id_url_by_name,
+                                    get_name_url_by_id,
                                     create_check,
                                     get_url_checks,
-                                    get_url_check_last
+                                    get_url_check_last,
                                    )
 from page_analyzer.validators import validate_url, is_null
+from page_analyzer.logick_checks import check_response
 
 load_dotenv()
 
@@ -90,5 +92,12 @@ def check_url(id):
     data = {}
     data["url_id"] = int(id)
     data["created_at"] = datetime.datetime.now()
-    create_check(data)
+    url = get_name_url_by_id(int(id))
+    info_check = check_response(url["name"])
+    if info_check["error"]:
+        flash('Произошла ошибка при проверке', 'error')
+    else:
+        data["status_code"] = info_check["status_code"]
+        create_check(data)
+        flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_url_id', id=data["url_id"]))
