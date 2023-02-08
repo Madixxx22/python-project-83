@@ -68,7 +68,7 @@ def url_add():
         return render_template('index.html', messages=messages), 422
 
     data['url'] = url
-    data['created_at'] = datetime.datetime.now()
+    data['created_at'] = datetime.datetime.now().date()
     create_url(data)
     data = get_id_url_by_name(url)
     flash('Страница успешно добавлена', 'success')
@@ -91,13 +91,13 @@ def get_url_id(id):
 def check_url(id):
     data = {}
     data["url_id"] = int(id)
-    data["created_at"] = datetime.datetime.now()
+    data["created_at"] = datetime.datetime.now().date()
     url = get_name_url_by_id(int(id))
     info_check = check_response(url["name"])
     if info_check["error"]:
         flash('Произошла ошибка при проверке', 'error')
     else:
-        data["status_code"] = info_check["status_code"]
+        data.update(info_check)
         create_check(data)
         flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_url_id', id=data["url_id"]))

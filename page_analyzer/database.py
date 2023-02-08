@@ -85,7 +85,7 @@ def get_url_checks(url_id: int) -> list:
     conn = get_connection()
     with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
         query = '''SELECT id, url_id, status_code, h1, title,
-                          description, created_at
+                   description, created_at
                    FROM url_checks
                    WHERE url_id = (%s)
                    ORDER BY id DESC;
@@ -125,11 +125,16 @@ def create_url(data: dict):
 def create_check(data: dict):
     conn = get_connection()
     with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-        query = '''INSERT INTO url_checks (url_id, status_code, created_at)
-                   VALUES (%s, %s, %s);
+        query = '''INSERT INTO url_checks (url_id, status_code,
+                                           h1, title,
+                                           description, created_at)
+                   VALUES (%s, %s, %s, %s, %s, %s);
                 '''
         cur.execute(query, (data['url_id'],
                             data["status_code"],
+                            data["h1"],
+                            data["title"],
+                            data["meta"],
                             data['created_at']))
         conn.commit()
     conn.close()

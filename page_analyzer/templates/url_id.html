@@ -79,7 +79,7 @@
             <td>{{ item['h1'] }}</td>
             <td>{{ item['title'] }}</td>
             <td>{{ item['description'] }}</td>
-            <td>{{ item['created_at'] }}</td>
+            <td>{{ item['created_at'].date() }}</td>
           </tr>
         {% endfor %}
       </tbody>
