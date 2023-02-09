@@ -30,6 +30,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 app.secret_key = SECRET_KEY
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 @app.get('/')
 def index():
     return render_template('index.html')
