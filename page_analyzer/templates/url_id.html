@@ -58,9 +58,9 @@
   <div class="container pt-5">
     <h2>Проверки</h2>
     <form action="{{ url_for('check_url', id=data['id']) }}" method="post" class="pt-2 pb-2">
-      <button type='submit' class="btn btn-primary">Запустить проверку</button>
+      <input type='submit' class="btn btn-primary" value="Запустить проверку">
     </form>
-    <table class="table table-bordered" data-test="checks"> 
+    <table class="table table-bordered table-hover" data-test="checks"> 
       <thead>
         <tr>
           <th>ID</th>
