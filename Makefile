@@ -10,10 +10,10 @@ lint:
 test:
 	poetry run pytest
 
-make coverage:
+coverage:
 	poetry run pytest --cov=gendiff --cov-report xml
 
-make check: lint test coverage
+check: lint test coverage
 
 build-db: db-drop db-create schema-data-load
 
@@ -47,6 +47,6 @@ db-connect:
 dev:
 	poetry run flask --app page_analyzer:app --debug run
 
-PORT ?= 8000
+PORT ?= 8001
 start:
 	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app

@@ -61,10 +61,10 @@ def url_add():
     url = request.form.get('url')
     errors = validate_url(url)
     if 'not valid' in errors['status']:
-        flash('Некорректный URL', 'error')
         if 'exists' in errors['status']:
             flash('Страница уже существует', 'warning')
             return redirect(url_for('get_url_id', id=errors['url']['id']))
+        flash('Некорректный URL', 'error')
         if 'exceeded size' in errors['status']:
             flash('URL превышает 255', 'error')
         elif 'zero size' in errors['status']:
