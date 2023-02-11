@@ -1,4 +1,5 @@
 import os
+import requests
 import datetime
 from dotenv import load_dotenv
 from flask import (
@@ -98,6 +99,7 @@ def check_url(id):
     data["url_id"] = int(id)
     data["created_at"] = datetime.datetime.now().date()
     url = get_name_url_by_id(int(id))
+
     info_check = check_response(url["name"])
     if info_check["error"]:
         flash('Произошла ошибка при проверке', 'error')
@@ -105,4 +107,5 @@ def check_url(id):
         data.update(info_check)
         create_check(data)
         flash('Страница успешно проверена', 'success')
+        
     return redirect(url_for('get_url_id', id=data["url_id"]))

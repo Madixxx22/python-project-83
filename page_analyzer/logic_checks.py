@@ -21,10 +21,12 @@ def find(find_element: str, soup: BeautifulSoup) -> str:
 
 def check_response(url: str) -> dict:
     info = {}
+    info["error"] = False
     try:
         req = requests.get(url)
         info["status_code"] = req.status_code
-        info["error"] = False
+        if info["status_code"] != 200:
+            raise requests.RequestException
         page = req.text
         soup = BeautifulSoup(page, 'html.parser')
         find_elements = ['h1', 'title',
@@ -35,6 +37,6 @@ def check_response(url: str) -> dict:
             else:
                 info[i] = find(i, soup)
         return info
-    except requests.exceptions.ConnectionError:
+    except requests.RequestException:
         info["error"] = True
         return info
