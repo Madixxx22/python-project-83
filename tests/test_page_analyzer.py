@@ -5,7 +5,6 @@ from page_analyzer.app import app
 @pytest.fixture()
 def get_app():
     app.config.update({"TESTING": True})
-    
     yield app
 
 

@@ -1,17 +1,15 @@
 import os
 import datetime
 from dotenv import load_dotenv
-from flask import (
-                   Flask,
+from flask import (Flask,
                    render_template,
                    request,
                    redirect,
                    url_for,
                    flash,
                    get_flashed_messages
-                 )
-from page_analyzer.database import (
-                                    get_urls,
+                   )
+from page_analyzer.database import (get_urls,
                                     create_url,
                                     get_url_by_id,
                                     get_id_url_by_name,
@@ -19,7 +17,7 @@ from page_analyzer.database import (
                                     create_check,
                                     get_url_checks,
                                     get_url_check_last,
-                                   )
+                                    )
 from page_analyzer.validators import validate_url, is_null
 from page_analyzer.logic_checks import check_response
 
