@@ -83,7 +83,7 @@ def get_url_id(id):
     messages = get_flashed_messages(with_categories=True)
     data = get_url_by_id(int(id))
     if is_null(data):
-        return render_template('index.html'), 404
+        return render_template('404.html'), 404
     data_checks = get_url_checks(int(id))
     return render_template('url_id.html', data=data,
                            data_checks=data_checks,
