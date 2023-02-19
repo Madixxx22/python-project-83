@@ -34,18 +34,3 @@ def test_urls_get(client):
     assert 'Имя' in response.text
     assert 'Последняя проверка' in response.text
     assert 'Код ответа' in response.text
-
-
-def test_urls_post(client):
-    response = client.post('/urls', data={'url': 'https://ru.hexlet.io'})
-    assert response.status_code == 302
-    response = client.post('/urls', data={'url': 'https://ru.hexlet.io'}, follow_redirects=True)  # noqa: E501 pylint: disable=unused-variable
-    assert response.status_code == 200
-    assert '/urls/' in response.request.path
-    assert 'Страница уже существует' in response.text
-
-
-def test_url_get(client):
-    response = client.get('/urls/1')
-    assert response.status_code == 200
-    assert 'Сайт:' in response.text

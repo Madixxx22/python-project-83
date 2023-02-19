@@ -99,16 +99,16 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "flake8"
-version = "5.0.4"
+version = "6.0.0"
 description = "the modular source code checker: pep8 pyflakes and co"
 category = "main"
 optional = false
-python-versions = ">=3.6.1"
+python-versions = ">=3.8.1"
 
 [package.dependencies]
 mccabe = ">=0.7.0,<0.8.0"
-pycodestyle = ">=2.9.0,<2.10.0"
-pyflakes = ">=2.5.0,<2.6.0"
+pycodestyle = ">=2.10.0,<2.11.0"
+pyflakes = ">=3.0.0,<3.1.0"
 
 [[package]]
 name = "flask"
@@ -226,7 +226,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "pycodestyle"
-version = "2.9.1"
+version = "2.10.0"
 description = "Python style guide checker"
 category = "main"
 optional = false
@@ -234,7 +234,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "pyflakes"
-version = "2.5.0"
+version = "3.0.1"
 description = "passive checker of Python programs"
 category = "main"
 optional = false
@@ -364,7 +364,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "219ffa12330d45db281acd19f4d56bb04e2a84c30bff24be1d08efb438c23d82"
+content-hash = "5171adf625652d32251061741b3cf05759a254e41d214abaf2989c267c033869"
 
 [metadata.files]
 attrs = []
