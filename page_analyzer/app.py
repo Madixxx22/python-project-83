@@ -57,7 +57,7 @@ def urls():
 def url_add():
     data = {}
     url = request.form.get('url')
-    db_url = get_id_url_by_name(check_url)
+    db_url = get_id_url_by_name(url)
     errors = validate_url(url, db_url)
     if 'not valid' in errors['status']:
         if 'exists' in errors['status']:
