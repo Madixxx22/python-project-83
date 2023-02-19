@@ -1,5 +1,4 @@
 from validators.url import url
-from page_analyzer.database import get_id_url_by_name
 
 
 def is_null(value: any) -> bool:
@@ -14,9 +13,9 @@ def is_null(value: any) -> bool:
     return False
 
 
-def validate_url(check_url: str) -> dict:
+def validate_url(check_url: str, db_url: str = '') -> dict:
     errors = {
-        'url': get_id_url_by_name(check_url),
+        'url': db_url,
         'status': []
     }
     if len(check_url) >= 255:
