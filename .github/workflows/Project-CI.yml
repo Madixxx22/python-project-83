@@ -34,12 +34,11 @@ jobs:
           POSTGRES_DB: page_analyzer
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
         run: |
-          make db-start
-          make build-db
+          make db-status
       - name: Create env file
         run: |
           touch .env
-          echo DATABASE_URL="postgresql://madix:316497258@127.0.0.1:5432/page_analyzer" >> .env
+          echo DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/page_analyzer" >> .env
           echo SECRET_KEY='secret' >> .env
       - name: Install dependencies
         run: |
