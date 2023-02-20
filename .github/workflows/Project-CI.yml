@@ -13,19 +13,19 @@ jobs:
     services:
       postgres:
         image: postgres
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: page_analyzer
-      ports:
-        - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: page_analyzer
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Setup Datavase
+      - name: Setup Database
         env:
           POSTGRES_HOST: postgres
           POSTGRES_USER: postgres
