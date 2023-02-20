@@ -33,6 +33,7 @@ jobs:
           POSTGRES_DB: page_analyzer
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
         run: |
+          make db-start
           make build-db
       - name: Create env file
         run: |
